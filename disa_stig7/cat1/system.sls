@@ -125,7 +125,6 @@ CAT1 RHEL-07-040500 remove tftp:
 # CAT1
 # RHEL-07-040800
 CAT1 RHEL-07-040800 snmp remove public:
- snmpd remove public:
   file.replace:
   - name: /etc/snmp/snmpd.conf
   - pattern: 'public'
