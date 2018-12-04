@@ -70,17 +70,6 @@ CAT1 RHEL-07-020060 localpkg_gpgcheck yum:
   - append_if_not_found: true
 
 # CAT1
-# RHEL-07-020070
-CAT1 RHEL-07-020070 repo_gpgcheck yum:
-  file.replace:
-  - name: /etc/yum.conf
-  - pattern: |
-      ^\s*repo_gpgcheck\s*=.+\n
-  - repl: "repo_gpgcheck=1\n"
-  - not_found_content: "repo_gpgcheck=1"
-  - append_if_not_found: true
-
-# CAT1
 # RHEL-07-020210
 CAT1 RHEL-07-020210 selinux enforcing:
   selinux.mode:
