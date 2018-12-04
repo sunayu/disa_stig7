@@ -200,3 +200,16 @@ CAT1 RHEL-07-010480 grub password:
     - 'password_pbkdf2 root {{ disa_stig7.grub_root_password }}'
   - watch_in:
     - cmd: grub-mkconfig
+
+# CAT1
+# RHEL-07-010482
+# RHEL-07-010491
+
+CAT1 RHEL-07-010482 grub2 password:
+  file.append:
+  - name: /etc/grub.d/40_custom
+  - text:
+    - 'set superusers="root"'
+    - 'password_pbkdf2 root {{ disa_stig7.grub_root_password }}'
+  - watch_in:
+    - cmd: grub2-mkconfig -o /boot/grub2/grub.cfg
