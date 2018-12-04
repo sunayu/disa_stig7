@@ -58,7 +58,7 @@ def main():
 
     grains['stig_audit_device'] = device
     grains['stig_audit_space_left'] = space_left
-    grains('stig_boot_firmware_efi'] = _using_efi()
+    grains['stig_boot_firmware_efi'] = _using_efi()
     grains['stig_boot_device'] = _find_boot_dev()
     grains['stig_root_device'] = _find_root_dev()
 
