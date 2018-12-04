@@ -27,12 +27,6 @@ def _find_root_dev():
     root_device = output_root.stdout.read().split('\n')[1].split()[0]
     return root_device
 
-def _using_efi():
-    if(os.path.exists("/sys/firmware/efi")):
-        return true
-    else:
-        return false
-
 def main():
     # initialize a grains dictionary
     grains = {}
@@ -58,7 +52,7 @@ def main():
 
     grains['stig_audit_device'] = device
     grains['stig_audit_space_left'] = space_left
-    grains['stig_boot_firmware_efi'] = _using_efi()
+    
     grains['stig_boot_device'] = _find_boot_dev()
     grains['stig_root_device'] = _find_root_dev()
 
