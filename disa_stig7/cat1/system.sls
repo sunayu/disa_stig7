@@ -23,15 +23,15 @@ CAT1 RHEL-07-010010 address rpm default mode,user,group permissions:
 # RHEL-07-010290
 CAT1 RHEL-07-010290 remove nullok from system-auth:
   file.replace:
-  - name: /etc/pam.d/system-auth 
+  - name: /etc/pam.d/system-auth
   - pattern: "nullok "
   - repl: ""
-  
+
 # CAT1
 # RHEL-07-010290
 CAT1 RHEL-07-010290 remove nullok from password-auth:
   file.replace:
-  - name: /etc/pam.d/password-auth 
+  - name: /etc/pam.d/password-auth
   - pattern: "nullok "
   - repl: ""
 
