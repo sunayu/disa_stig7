@@ -200,4 +200,3 @@ CAT1 RHEL-07-010480 grub password:
     - 'password_pbkdf2 root {{ disa_stig7.grub_root_password }}'
   - watch_in:
     - cmd: grub-mkconfig
-
