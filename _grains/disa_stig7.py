@@ -15,6 +15,7 @@
 
 from subprocess import Popen, PIPE
 import os
+import sys
 
 def _find_boot_dev():
     output = Popen(['df','/boot'], stdout=PIPE)
@@ -25,6 +26,12 @@ def _find_root_dev():
     output_root = Popen(['df','/'], stdout=PIPE)
     root_device = output_root.stdout.read().split('\n')[1].split()[0]
     return root_device
+
+def _using_efi():
+    if(os.path.exists("/sys/firmware/efi")):
+        return true
+    else:
+        return false
 
 def main():
     # initialize a grains dictionary
@@ -41,7 +48,7 @@ def main():
 
         if exit_code == 0:
             cmd_data = output[0].split('\n')
-  
+
             if len(cmd_data[1].split()) == 1:
                 device = cmd_data[1].split()[0]
                 space_left = int(int(cmd_data[2].split()[0]) * 0.25)
@@ -51,9 +58,8 @@ def main():
 
     grains['stig_audit_device'] = device
     grains['stig_audit_space_left'] = space_left
-
+	grains('stig_boot_firmware'] = _using_efi()
     grains['stig_boot_device'] = _find_boot_dev()
     grains['stig_root_device'] = _find_root_dev()
- 
-    return grains
 
+    return grains
