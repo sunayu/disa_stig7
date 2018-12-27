@@ -11,22 +11,30 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
+#{% from "disa_stig7/map.jinja" import disa_stig7 with context %}
 
-include:
-  - .cat1.auditd
-  - .cat1.clamav
-  - .cat1.fips
-  - .cat1.sshd
-  - .cat1.system
-  - .cat2.aide
-  - .cat2.auditd
-  - .cat2.iptables
-  - .cat2.ntp
-  - .cat2.rsyslog
-  - .cat2.sshd
-  - .cat2.sssd
-  - .cat2.sysctl
-  - .cat2.system
-  - .cat3.sshd
-  - .cat3.system
-  - .cat2.perms
+#include:
+#  - disa_stig7.auditd
+
+#CAT2
+### RHEL-07-030010
+### RHEL-07-020320
+
+# CAT2
+# RHEL-07-020320
+#CAT2 RHEL-07-02320 unowned.files
+#  cmd.run:
+
+# CAT2
+# RHEL-07-030010
+#CAT2 RHEL-07-030010 audit.rules:
+#  cmd.run:
+#    - name: auditctl -f 2
+# file.append:
+#   - name: /etc/audit/rules.d/audit.rules
+#   - text:
+#     - "-f 2"
+#   - watch_in:
+#     - cmd: auditd service restart
+
+#{% endif %}

@@ -142,6 +142,18 @@ auditd.conf flush:
   - watch_in:
     - cmd: auditd service restart
 
+#CAT2
+# RHEL-07-030010
+CAT2 RHEL-07-030010 audit.rules:
+  cmd.run:
+    - name: auditctl -f 2
+  file.append:
+  - name: /etc/audit/rules.d/audit.rules
+  - text:
+    - "-f 2"
+  - watch_in:
+    - cmd: auditd service restart
+
 # CAT2
 # RHEL-07-030330
 {% if disa_stig7.log_server %}
