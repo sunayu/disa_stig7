@@ -50,3 +50,8 @@ CAT3 RHEL-07-040000 limits.conf limit 10 logins:
   - not_found_content: "* hard maxlogins 10"
   - append_if_not_found: true
 
+# CAT3
+# RHEL-07-021340
+CAT3 RHEL-07-021340 tmp.mount service enabled:
+  service.enabled:
+  - name: tmp.mount
