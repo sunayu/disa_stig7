@@ -29,4 +29,3 @@ include:
   - .cat2.system
   - .cat3.sshd
   - .cat3.system
-  - .cat2.perms

@@ -21,6 +21,5 @@ include:
   - .sssd
   - .sysctl
   - .system
-  - .perms
   # Aide last
   - .aide
