@@ -83,6 +83,16 @@ include:
 # RHEL-07-030920
 # RHEL-07-030819
 # RHEL-07-030821
+# RHEL-07-030360
+# RHEL-07-030370
+# RHEL-07-030380
+# RHEL-07-030390
+# RHEL-07-030400
+# RHEL-07-030410
+# RHEL-07-030420
+# RHEL-07-030430
+# RHEL-07-030440
+
 CAT2 audit.rules:
   file.managed:
   - name:      /etc/audit/rules.d/disa_stig7.rules
@@ -119,7 +129,7 @@ CAT2 RHEL-07-030351 auditd.conf space_left_action:
     - cmd: auditd service restart
 
 # CAT2
-# RHEL-07-030352
+# RHEL-07-030352 030340
 CAT2 RHEL-07-030352 auditd.conf action_mail_acct:
   file.replace:
   - name: /etc/audit/auditd.conf
@@ -142,7 +152,223 @@ auditd.conf flush:
   - watch_in:
     - cmd: auditd service restart
 
-#CAT2
+# CAT2
+# RHEL-07-030360
+CAT2 RHEL-07-030360 audit.rules execv:
+  file.replace:
+  {% if grains['osarch'] == 'x86_64' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b64\*.+$
+  - repl: "-a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -k setuid\n"
+  - not_found_content: "-a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -k setuid"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% elif grains['osarch'] == 'x86_32' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b32\*.+$
+  - repl: "-a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k setuid\n"
+  - not_found_content: "-a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k setuid"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% endif %}
+
+# CAT2
+# RHEL-07-030360
+CAT2 RHEL-07-030360 audit.rules execv2:
+  file.replace:
+  {% if grains['osarch'] == 'x86_64' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\-a\s*always,exit\s*\-F\*arch=b64\*\-S\*execve\*.+$
+  - repl: "-a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k setgid\n"
+  - not_found_content: "-a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k setgid"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% elif grains['osarch'] == 'x86_32' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b32\*.+$
+  - repl: "-a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k setgid"
+  - not_found_content: "-a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k setgid"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% endif %}
+
+# CAT2
+# RHEL-07-030370
+CAT2 RHEL-07-030370 audit.rules chown:
+  file.replace:
+  {% if grains['osarch'] == 'x86_64' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b64\*.+$
+  - repl: "-a always,exit -F arch=b64 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b64 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% elif grains['osarch'] == 'x86_32' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b32\*.+$
+  - repl: "-a always,exit -F arch=b32 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - not_found_content: "-a always,exit -F arch=b32 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% endif %}
+
+# CAT2
+# RHEL-07-030390
+CAT2 RHEL-07-030390 audit.rules lchown:
+  file.replace:
+  {% if grains['osarch'] == 'x86_64' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b64\*.+$
+  - repl: "-a always,exit -F arch=b64 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b64 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% elif grains['osarch'] == 'x86_32' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b32\*.+$
+  - repl: "-a always,exit -F arch=b32 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b32 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% endif %}
+
+# CAT2
+# RHEL-07-030400
+CAT2 RHEL-07-030400 audit.rules fchownat:
+  file.replace:
+  {% if grains['osarch'] == 'x86_64' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b64\*.+$
+  - repl: "-a always,exit -F arch=b64 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b64 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% elif grains['osarch'] == 'x86_32' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b32\*.+$
+  - repl: "-a always,exit -F arch=b32 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b32 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% endif %}
+
+# CAT2
+# RHEL-07-030410
+CAT2 RHEL-07-030410 audit.rules chmod:
+  file.replace:
+  {% if grains['osarch'] == 'x86_64' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b64\*.+$
+  - repl: "-a always,exit -F arch=b64 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b64 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% elif grains['osarch'] == 'x86_32' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b32\*.+$
+  - repl: "-a always,exit -F arch=b32 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b32 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% endif %}
+
+# CAT2
+# RHEL-07-030420
+CAT2 RHEL-07-030420 audit.rules fchmod:
+  file.replace:
+  {% if grains['osarch'] == 'x86_64' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b64\*.+$
+  - repl: "-a always,exit -F arch=b64 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b64 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% elif grains['osarch'] == 'x86_32' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b32\*.+$
+  - repl: "-a always,exit -F arch=b32 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b32 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% endif %}
+
+# CAT2
+# RHEL-07-030430
+CAT2 RHEL-07-030430 audit.rules fchmodat:
+  file.replace:
+  {% if grains['osarch'] == 'x86_64' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b64\*.+$
+  - repl: "-a always,exit -F arch=b64 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b64 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% elif grains['osarch'] == 'x86_32' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b32\*.+$
+  - repl: "-a always,exit -F arch=b32 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b32 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% endif %}
+
+# CAT2
+# RHEL-07-030440
+CAT2 RHEL-07-030440 audit.rules setxattr:
+  file.replace:
+  {% if grains['osarch'] == 'x86_64' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b64\*.+$
+  - repl: "-a always,exit -F arch=b64 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b64 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% elif grains['osarch'] == 'x86_32' %}
+  - name: /etc/audit/audit.rules
+  - pattern: |
+      ^\\-a\s*always,exit\s*arch=b32\*.+$
+  - repl: "-a always,exit -F arch=b32 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod\n"
+  - not_found_content: "-a always,exit -F arch=b32 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+  {% endif %}
+
+# CAT2
 # RHEL-07-030010
 CAT2 RHEL-07-030010 audit.rules:
   cmd.run:
