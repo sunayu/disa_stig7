@@ -38,11 +38,38 @@ CAT2 RHEL-07-031010 rsyslog.d log server:
 # CAT2
 # RHEL-07-031010
 CAT2 RHEL-07-031010 rsyslog imtcp:
-  file.comment:
+  file.replace:
   - name: /etc/rsyslog.conf
-  - regex: ^\$ModLoad\s+imtcp
+  - pattern: ^\$Module\s*imtcp$
+  - repl: "#$Module imtcp"
+  - not_found_content: "#$Module imtcp"
+  - append_if_not_found: True 
   - watch_in:
     - service: rsyslog service restart 
+
+# CAT2
+# RHEL-07-031010
+CAT2 RHEL-07-031010 rsyslog imudp:
+  file.replace:
+  - name: /etc/rsyslog.conf
+  - pattern: ^\$Module\s*imudp$
+  - repl: "#$Module imudp"
+  - not_found_content: "#$Module imudp"
+  - append_if_not_found: True
+  - watch_in:
+    - service: rsyslog service restart
+
+# CAT2
+# RHEL-07-031010
+CAT2 RHEL-07-031010 rsyslog imrelp:
+  file.replace:
+  - name: /etc/rsyslog.conf
+  - pattern: ^\$Module\s*imrelp$
+  - repl: "#$Module imrelp"
+  - not_found_content: "#$Module imrelp"
+  - append_if_not_found: True
+  - watch_in:
+    - service: rsyslog service restart
 
 # CAT2
 # RHEL-07-040020
