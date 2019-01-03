@@ -26,17 +26,23 @@ CAT2 RHEL-07-021160 log cron rsyslog:
     - service: rsyslog service restart
 
 # CAT2
-# RHEL-07-030770
-# RHEL-07-030780
-# RHEL-07-031010
+# RHEL-07-031000
 CAT2 RHEL-07-031010 rsyslog.d log server:
   file.managed:
   - name: /etc/rsyslog.d/log_server.conf
   - contents:
-    - 'ModLoad imtcp'
     - '*.* @@{{ disa_stig7.log_server }}'
   - watch_in:
     - service: rsyslog service restart
+
+# CAT2
+# RHEL-07-031010
+CAT2 RHEL-07-031010 rsyslog imtcp:
+  file.comment:
+  - name: /etc/rsyslog.conf
+  - regex: ^\$ModLoad\s+imtcp
+  - watch_in:
+    - service: rsyslog service restart 
 
 # CAT2
 # RHEL-07-040020
