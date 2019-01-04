@@ -18,6 +18,11 @@
 include:
   - disa_stig7.sysctl
 
+
+# CAT2
+# RHEL-07-040510
+{{ set_sysctl_conf('CAT2','RHEL-07-040510','net.ipv4.tcp_invalid_ratelimit','500') }}
+
 # CAT2
 # RHEL-07-040610
 {{ set_sysctl_conf('CAT2','RHEL-07-040610','net.ipv4.conf.all.accept_source_route','0') }}
