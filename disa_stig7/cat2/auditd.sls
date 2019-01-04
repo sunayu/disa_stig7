@@ -153,30 +153,6 @@ auditd.conf flush:
     - cmd: auditd service restart
 
 # CAT2
-# RHEL-07-030360
-CAT2 RHEL-07-030360 audit.rules execv:
-  file.replace:
-  {% if grains['osarch'] == 'x86_64' %}
-  - name: /etc/audit/audit.rules
-  - pattern: |
-      ^\\-a\s*always,exit\s*-F\s*arch=b64\s*-S\*execve\*.+$
-  - repl: "-a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -k setuid\n"
-  - not_found_content: "-a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -k setuid"
-  - append_if_not_found: True
-  - watch_in:
-    - cmd: auditd service restart
-  {% elif grains['osarch'] == 'x86_32' %}
-  - name: /etc/audit/audit.rules
-  - pattern: |
-      ^\\-a\s*always,exit\s*arch=b32\*.+$
-  - repl: "-a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k setuid\n"
-  - not_found_content: "-a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k setuid"
-  - append_if_not_found: True
-  - watch_in:
-    - cmd: auditd service restart
-  {% endif %}
-
-# CAT2
 # RHEL-07-030010
 CAT2 RHEL-07-030010 audit.rules:
   cmd.run:

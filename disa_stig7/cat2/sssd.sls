@@ -53,6 +53,11 @@ sssd initialize sssd.conf:
     - offline_credentials_expiration = 1
     - offline_failed_login_attempts = 3
     - offline_failed_login_delay = 30
+    - ''
+    - '[ldap]'
+    - ldap_id_use_start_tls = True
+    - ldap_tls_reqcert = demand
+    - ldap_tls_cacert = /etc/pki/tls/certs/ca-bundle.crt
   - replace: false
   - watch_in:
     - service: sssd restart service
@@ -85,6 +90,16 @@ CAT2 RHEL-07-010402 sssd.conf ssh ssh_known_hosts_timeout:
   - context: /files/etc/sssd/sssd.conf
   - changes:
     - set "target[. = 'ssh']/ssh_known_hosts_timeout" 86400
+  - watch_in:
+    - service: sssd restart service
+
+# CAT2
+# RHEL-07-040180
+CAT2 RHEL-07-040180 sssd.conf ldap ldap_id_use_start_tls:
+  augeas.change:
+  - context: /files/etc/sssd/sssd.conf
+  - changes:
+    - set "target[. = 'ldap']/ldap_id_use_start_tls" true
   - watch_in:
     - service: sssd restart service
 
