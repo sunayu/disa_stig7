@@ -27,3 +27,4 @@ disa_stig7:
   firewalld:
     allowed_services:
     - ssh
+  audit_fail_flag: -f 1
