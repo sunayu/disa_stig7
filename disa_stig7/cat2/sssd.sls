@@ -30,6 +30,8 @@ sssd initialize sssd.conf:
   file.managed:
   - name: /etc/sssd/sssd.conf
   - mode: 0600
+  - user: root
+  - group: root
   - contents:
     - '[sssd]'
     - domains = LOCAL
