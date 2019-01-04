@@ -1,277 +1,136 @@
-# RHEL-07-030090
--f 1
-
-# RHEL-07-030310
--a always,exit -F perm=x -F auid>=1000 -F auid!=4294967295 -k setuid/setgid
-
 # RHEL-07-030360
+-a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k setgid
+-a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -k setuid
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k setgid
-  -a always,exit -F arch=b64 -S execve -C uid!=euid -F euid=0 -k setuid
-  -a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k setuid
-  -a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k setgid
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k setuid
-  -a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k setgid
+-a always,exit -F arch=b32 -S execve -C uid!=euid -F euid=0 -k setuid
+-a always,exit -F arch=b32 -S execve -C gid!=egid -F egid=0 -k setgid
 {% endif %}
 
 # RHEL-07-030370
+-a always,exit -F arch=b32 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b64 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b32 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
 # RHEL-07-030380
+-a always,exit -F arch=b32 -S fchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% endif %}
+-a always,exit -F arch=b64 -S fchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
 
-# RHEL-07-030381
-{% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S fchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S fchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S fchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% endif %}
-
-# RHEL-07-030382
-{% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% endif %}
-
-# RHEL-07-030383
-{% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
 # RHEL-07-030390
+-a always,exit -F arch=b32 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% endif %}
-
-# RHEL-07-030391
-{% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% endif %}
-
-# RHEL-07-030392
-{% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
 # RHEL-07-030400
+-a always,exit -F arch=b32 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
-# RHEL-07-030401
+# RHEL-07-030410
+-a always,exit -F arch=b32 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S fsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S fsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S fsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% endif %}
-
-# RHEL-07-030402
-{% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S lsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S lsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S lsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% endif %}
-
-# RHEL-07-030403
-{% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S removexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S removexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S removexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% endif %}
-
-# RHEL-07-030404
-{% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% endif %}
-
-# RHEL-07-030405
-{% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S lremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S lremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S lremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% endif %}
-
-# RHEL-07-03410
-{% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
 # RHEL-07-030420
+-a always,exit -F arch=b32 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
 # RHEL-07-030430
+-a always,exit -F arch=b32 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
 # RHEL-07-030440
+-a always,exit -F arch=b32 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
 # RHEL-07-030450
+-a always,exit -F arch=b32 -S fsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S fsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S fsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S fsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S fsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
 # RHEL-07-030460
+-a always,exit -F arch=b32 -S lsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S lsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S lsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S lsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S lsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
 # RHEL-07-030470
+-a always,exit -F arch=b32 -S removexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S removexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S removexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S removexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S removexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
 # RHEL-07-030480
+-a always,exit -F arch=b32 -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
 # RHEL-07-030490
+-a always,exit -F arch=b32 -S lremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S lremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-  -a always,exit -F arch=b64 -S lremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S lremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S lremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
 {% endif %}
 
 # RHEL-07-030500
+-a always,exit -F arch=b32 -S creat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b32 -S creat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S creat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b32 -S creat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b64 -S creat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b64 -S creat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S creat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b32 -S creat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S creat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S creat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
 {% endif %}
 
 # RHEL-07-030510
+-a always,exit -F arch=b32 -S open -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b32 -S open -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S open -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b32 -S open -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b64 -S open -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b64 -S open -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S open -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b32 -S open -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S open -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S open -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
 {% endif %}
 
 # RHEL-07-030520
+-a always,exit -F arch=b32 -S openat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b32 -S openat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S openat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b32 -S openat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b64 -S openat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b64 -S openat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S openat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b32 -S openat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S openat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S openat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
 {% endif %}
 
 # RHEL-07-030530
+-a always,exit -F arch=b32 -S open_by_handle_at -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b32 -S open_by_handle_at -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S open_by_handle_at -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b32 -S open_by_handle_at -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b64 -S open_by_handle_at -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b64 -S open_by_handle_at -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S open_by_handle_at -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b32 -S open_by_handle_at -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S open_by_handle_at -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S open_by_handle_at -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
 {% endif %}
 
 # RHEL-07-030540
+-a always,exit -F arch=b32 -S truncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b32 -S truncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S truncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b32 -S truncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b64 -S truncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b64 -S truncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S truncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b32 -S truncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S truncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S truncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
 {% endif %}
 
-# RHEL-07-030441
--a always,exit -F path=/usr/sbin/semanage -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged-priv_change
-
-# RHEL-07-030442
--a always,exit -F path=/usr/sbin/setsebool -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged-priv_change
-
-# RHEL-07-030444
--a always,exit -F path=/usr/sbin/restorecon -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged-priv_change
-
 # RHEL-07-030550
+-a always,exit -F arch=b32 -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b32 -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b32 -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b64 -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b64 -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
-  -a always,exit -F arch=b32 -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
 {% endif %}
 
 # RHEL-07-030560
@@ -299,7 +158,7 @@
 -a always,exit -F path=/usr/bin/passwd -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged-passwd
 
 # RHEL-07-030640
--a always,exit -F path=/sbin/unix_chkpwd -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged-passwd
+-a always,exit -F path=/usr/sbin/unix_chkpwd -F auid>=1000 -F auid!=4294967295 -k privileged-passwd
 
 # RHEL-07-030650
 -a always,exit -F path=/usr/bin/gpasswd -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged-passwd
@@ -330,13 +189,10 @@
 -a always,exit -F path=/bin/sudoedit -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged-priv_change
 
 # RHEL-07-030740
+-a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k privileged-mount
+-a always,exit -F path=/usr/bin/mount -F auid>=1000 -F auid!=4294967295 -k privileged-mount
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k privileged-mount
-  -a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k privileged-mount
-  -a always,exit -F path=/usr/bin/mount -F auid>=1000 -F auid!=4294967295 -k privileged-mount
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k privileged-mount
-  -a always,exit -F path=/usr/bin/mount -F auid>=1000 -F auid!=4294967295 -k privileged-mount
+-a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k privileged-mount
 {% endif %}
 
 # RHEL-07-030750
@@ -358,35 +214,27 @@
 -a always,exit -F path=/usr/sbin/pam_timestamp_check -F auid>=1000 -F auid!=4294967295 -k privileged-pam
 
 # RHEL-07-030819
+-a always,exit -F arch=b32 -S create_module -k module-change
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S create_module -k module-change
-  -a always,exit -F arch=b64 -S create_module -k module-change
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S create_module -k module-change
+-a always,exit -F arch=b64 -S create_module -k module-change
 {% endif %}
 
 # RHEL-07-030820
+-a always,exit -F arch=b32 -S init_module -k module-change
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S init_module -k module-change
-  -a always,exit -F arch=b64 -S init_module -k module-change
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S init_module -k module-change
+-a always,exit -F arch=b64 -S init_module -k module-change
 {% endif %}
 
 # RHEL-07-030821
+-a always,exit -F arch=b32 -S finit_module -k module-change
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S finit_module -k module-change
-  -a always,exit -F arch=b64 -S finit_module -k module-change
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S finit_module -k module-change
+-a always,exit -F arch=b64 -S finit_module -k module-change
 {% endif %}
 
 # RHEL-07-030830
+-a always,exit -F arch=b32 -S delete_module -k module-change
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S delete_module -k module-change
-  -a always,exit -F arch=b64 -S delete_module -k module-change
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S delete_module -k module-change
+-a always,exit -F arch=b64 -S delete_module -k module-change
 {% endif %}
 
 # RHEL-07-030840
@@ -414,49 +262,37 @@
 -w /etc/security/opasswd -p wa -k identity
 
 # RHEL-07-030880
+-a always,exit -F arch=b32 -S rename -F auid>=1000 -F auid!=4294967295 -k delete
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S rename -F auid>=1000 -F auid!=4294967295 -k delete
-  -a always,exit -F arch=b64 -S rename -F auid>=1000 -F auid!=4294967295 -k delete
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S rename -F auid>=1000 -F auid!=4294967295 -k delete
+-a always,exit -F arch=b64 -S rename -F auid>=1000 -F auid!=4294967295 -k delete
 {% endif %}
 
 # RHEL-07-030890
+-a always,exit -F arch=b32 -S renameat -F auid>=1000 -F auid!=4294967295 -k delete
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S renameat -F auid>=1000 -F auid!=4294967295 -k delete
-  -a always,exit -F arch=b64 -S renameat -F perm=x -F auid>=1000 -F auid!=4294967295 -k delete
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S renameat -F auid>=1000 -F auid!=4294967295 -k delete
+-a always,exit -F arch=b64 -S renameat -F perm=x -F auid>=1000 -F auid!=4294967295 -k delete
 {% endif %}
 
 # RHEL-07-030900
+-a always,exit -F arch=b32 -S rmdir -F auid>=1000 -F auid!=4294967295 -k delete
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S rmdir -F auid>=1000 -F auid!=4294967295 -k delete
-  -a always,exit -F arch=b64 -S rmdir -F perm=x -F auid>=1000 -F auid!=4294967295 -k delete
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S rmdir -F auid>=1000 -F auid!=4294967295 -k delete
+-a always,exit -F arch=b64 -S rmdir -F perm=x -F auid>=1000 -F auid!=4294967295 -k delete
 {% endif %}
 
 # RHEL-07-030910
+-a always,exit -F arch=b32 -S unlink -F auid>=1000 -F auid!=4294967295 -k delete
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S unlink -F auid>=1000 -F auid!=4294967295 -k delete
-  -a always,exit -F arch=b64 -S unlink -F auid>=1000 -F auid!=4294967295 -k delete
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S unlink -F auid>=1000 -F auid!=4294967295 -k delete
+-a always,exit -F arch=b64 -S unlink -F auid>=1000 -F auid!=4294967295 -k delete
 {% endif %}
 
 # RHEL-07-030920
+-a always,exit -F arch=b32 -S unlinkat -F auid>=1000 -F auid!=4294967295 -k delete
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S unlinkat -F auid>=1000 -F auid!=4294967295 -k delete
-  -a always,exit -F arch=b64 -S unlinkat -F auid>=1000 -F auid!=4294967295 -k delete
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S unlinkat -F auid>=1000 -F auid!=4294967295 -k delete
+-a always,exit -F arch=b64 -S unlinkat -F auid>=1000 -F auid!=4294967295 -k delete
 {% endif %}
 
 # Others
+-a always,exit -F arch=b32 -S stime -k audit_time_rules
 {% if grains['osarch'] == 'x86_64' %}
-  -a always,exit -F arch=b32 -S stime -k audit_time_rules
-  -a always,exit -F arch=b64 -S adjtimex -S settimeofday -k audit_time_rules
-{% elif grains['osarch'] == 'x86_32' %}
-  -a always,exit -F arch=b32 -S stime -k audit_time_rules
+-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k audit_time_rules
 {% endif %}
