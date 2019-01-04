@@ -1,7 +1,7 @@
 {% from "disa_stig7/map.jinja" import disa_stig7 with context %}
 
 # RHEL-07-030100
-{{ disa_stig7.audit_fail_flag }}
+-f {{ disa_stig7.audit_fail_flag }}
 
 # RHEL-07-030360
 -a always,exit -F arch=b64 -S execve -C gid!=egid -F egid=0 -k setgid
