@@ -17,6 +17,7 @@ account     required      pam_permit.so
 password    requisite     pam_pwquality.so try_first_pass local_users_only retry=3
 password    sufficient    pam_unix.so sha512 shadow try_first_pass use_authtok remember={{ password_remember }}
 password    required      pam_deny.so
+password    substack      system-auth
 
 session     optional      pam_keyinit.so revoke
 session     required      pam_limits.so
