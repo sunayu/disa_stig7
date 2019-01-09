@@ -377,9 +377,9 @@ CAT2 pam.d password-auth:
 
 # CAT2
 # RHEL-07-040820
-CAT2 RHEL-07-040820 libswanpkg remove:
-  pkg.purged:
-  - name: libreswan
+#CAT2 RHEL-07-040820 libswanpkg remove:
+#  pkg.purged:
+#  - name: libreswan
 
 {% set postfix_version = salt['pkg.version']('postfix') %}
 {% if postfix_version %}
@@ -478,7 +478,7 @@ CAT2 RHEL-07-041003 pam_pkcs11 must impliment ocsp:
   file.replace:
   - name: /etc/pam_pkcs11/pam_pkcs11.conf
   - pattern: |
-      ^\s+?cert_policy\s*=\s*=.+$
+      ^\s+?cert_policy\s*=.+$
   - repl: "cert_policy = ca, ocsp_on, signature;\n"
   - append_if_not_found: false
 
