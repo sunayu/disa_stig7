@@ -413,6 +413,30 @@ CAT2 RHEL-07-040720 tftp-server server_args:
   - repl: "server_args = -s /var/lib/tftpboot\n"
 {% endif %}
 
+{% set libreswan_version = salt['pkg.version']('libreswan-server') %}
+{% if libreswan_version %}
+# CAT2
+# RHEL-07-040820
+CAT2 RHEL-07-040720 libreswan ipsec:
+  file.comment:
+  - name: /etc/ipsec.conf
+  - pattern: |
+      ^conn.+$
+  - repl: "#conn"
+{% endif %}
+
+{% set libreswan_version = salt['pkg.version']('libreswan-server') %}
+{% if libreswan_version %}
+# CAT2
+# RHEL-07-040820
+CAT2 RHEL-07-040820 :
+  file.comment:
+  - name: /etc/ipsec.d/*.conf
+  - pattern: |
+      ^conn.+$
+  - repl: "#conn"
+{% endif %}
+
 # RHEL-07-041001
 CAT2 RHEL-07-041001 pkgs for multifactor auth:
   pkg.installed:
