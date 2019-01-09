@@ -83,6 +83,16 @@ include:
 # RHEL-07-030920
 # RHEL-07-030819
 # RHEL-07-030821
+# RHEL-07-030360
+# RHEL-07-030370
+# RHEL-07-030380
+# RHEL-07-030390
+# RHEL-07-030400
+# RHEL-07-030410
+# RHEL-07-030420
+# RHEL-07-030430
+# RHEL-07-030440
+
 CAT2 audit.rules:
   file.managed:
   - name:      /etc/audit/rules.d/disa_stig7.rules
@@ -119,7 +129,7 @@ CAT2 RHEL-07-030351 auditd.conf space_left_action:
     - cmd: auditd service restart
 
 # CAT2
-# RHEL-07-030352
+# RHEL-07-030352 030340
 CAT2 RHEL-07-030352 auditd.conf action_mail_acct:
   file.replace:
   - name: /etc/audit/auditd.conf
@@ -139,18 +149,6 @@ auditd.conf flush:
   - repl: "flush = data\n"
   - not_found_content: "flush = data"
   - append_if_not_found: True
-  - watch_in:
-    - cmd: auditd service restart
-
-#CAT2
-# RHEL-07-030010
-CAT2 RHEL-07-030010 audit.rules:
-  cmd.run:
-    - name: auditctl -f 2
-  file.append:
-  - name: /etc/audit/rules.d/audit.rules
-  - text:
-    - "-f 2"
   - watch_in:
     - cmd: auditd service restart
 

@@ -26,15 +26,48 @@ CAT2 RHEL-07-021160 log cron rsyslog:
     - service: rsyslog service restart
 
 # CAT2
-# RHEL-07-030770
-# RHEL-07-030780
-# RHEL-07-031010
+# RHEL-07-031000
 CAT2 RHEL-07-031010 rsyslog.d log server:
   file.managed:
   - name: /etc/rsyslog.d/log_server.conf
   - contents:
-    - 'ModLoad imtcp'
     - '*.* @@{{ disa_stig7.log_server }}'
+  - watch_in:
+    - service: rsyslog service restart
+
+# CAT2
+# RHEL-07-031010
+CAT2 RHEL-07-031010 rsyslog imtcp:
+  file.replace:
+  - name: /etc/rsyslog.conf
+  - pattern: ^\$Module\s*imtcp$
+  - repl: "#$Module imtcp"
+  - not_found_content: "#$Module imtcp"
+  - append_if_not_found: True 
+  - watch_in:
+    - service: rsyslog service restart 
+
+# CAT2
+# RHEL-07-031010
+CAT2 RHEL-07-031010 rsyslog imudp:
+  file.replace:
+  - name: /etc/rsyslog.conf
+  - pattern: ^\$Module\s*imudp$
+  - repl: "#$Module imudp"
+  - not_found_content: "#$Module imudp"
+  - append_if_not_found: True
+  - watch_in:
+    - service: rsyslog service restart
+
+# CAT2
+# RHEL-07-031010
+CAT2 RHEL-07-031010 rsyslog imrelp:
+  file.replace:
+  - name: /etc/rsyslog.conf
+  - pattern: ^\$Module\s*imrelp$
+  - repl: "#$Module imrelp"
+  - not_found_content: "#$Module imrelp"
+  - append_if_not_found: True
   - watch_in:
     - service: rsyslog service restart
 
