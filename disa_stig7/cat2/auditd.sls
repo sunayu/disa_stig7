@@ -102,6 +102,27 @@ CAT2 audit.rules:
     - cmd: auditd service restart
 
 # CAT2
+# RHEL-07-030200
+audisp-remote file create:
+  file.managed:
+  - name: /etc/audisp/plugins.d/au-remote.conf
+  - user: root
+  - group: root
+  - mode: 0600
+  - replace: false
+
+# CAT2
+# RHEL-07-030200
+CAT2 RHEL-07-030200 audisp-remote daemon active:
+  file.replace:
+  - name: /etc/audisp/plugins.d/au-remote.conf
+  - pattern: ^active\s*=\s*yes.+$
+  - repl: "active = yes\n"
+  - append_if_not_found: True
+  - watch_in:
+    - cmd: auditd service restart
+
+# CAT2
 # RHEL-07-030350
 {% set audit_space_left = salt['grains.get']('stig_audit_space_left','75') %}
 CAT2 RHEL-07-030350 auditd.conf space_left:
