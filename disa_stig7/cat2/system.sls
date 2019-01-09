@@ -221,6 +221,16 @@ CAT2 RHEL-07-010420 login.defs FAIL_DELAY:
   - append_if_not_found: true
 
 # CAT2
+# RHEL-07-010481
+CAT2 RHEL-07-010481 single_user_mode authentication:
+  file.replace:
+  - name: /usr/lib/systemd/system/rescue.service
+  - pattern: |
+      ^ExecStart=-\/bin\/sh\s*-c\s*\"/usr/bin/systemctl\s*--fail.+$
+  - repl: "ExecStart=-/bin/sh -c \"/usr/sbin/sulogin; /usr/bin/systemctl --fail --no-block default\n"
+  - append_if_not_found: false
+
+# CAT2
 # RHEL-07-020230
 CAT2 RHEL-07-020230 login.defs UMASK:
   file.replace:
