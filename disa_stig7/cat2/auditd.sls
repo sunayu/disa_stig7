@@ -125,9 +125,6 @@ CAT2 RHEL-07-030200 audisp-remote daemon active:
       type = always
   - append_if_not_found: True
   - show_changes: True
-#  - pattern: ^active\s*=\s*yes.+$
-#  - repl: "active = yes\n"
-#  - append_if_not_found: True
   - watch_in:
     - cmd: auditd service restart
 
