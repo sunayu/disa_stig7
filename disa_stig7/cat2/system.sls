@@ -304,6 +304,27 @@ CAT2 RHEL-07-020101 modprobe disable dccp:
   - contents: install dccp /bin/true
 
 # CAT2
+# RHEL-07-030101
+blacklist-dccp file create:
+  file.managed:
+  - name: /etc/modprobe.d/blacklist.conf
+  - user: root
+  - group: root
+  - mode: 0600
+  - replace: false
+
+# CAT2
+# RHEL-07-030101
+CAT2 RHEL-07-030101 blacklist dccp:
+  file.replace:
+  - name: /etc/modprobe.d/blacklist.conf
+  - pattern: |
+      ^blacklist\s*dccp.+$
+  - repl: 'blacklist dccp\n'
+  - not_found_content: 'blacklist dccp'
+  - append_if_not_found: True
+
+# CAT2
 # RHEL-07-020161
 {% set autofs_service_status = salt['service.available']('autofs') %}
 {% if autofs_service_status %}
