@@ -433,10 +433,7 @@ CAT2 RHEL-07-040720 libreswan ipsec:
   - pattern: |
       ^conn.+$
   - repl: "#conn"
-{% endif %}
 
-{% set libreswan_version = salt['pkg.version']('libreswan-server') %}
-{% if libreswan_version %}
 # CAT2
 # RHEL-07-040820
 CAT2 RHEL-07-040820 :

@@ -28,4 +28,4 @@ disa_stig7:
     allowed_services:
     - ssh
   audit_fail_flag: 1
-  reset_rpms: yes
+  reset_rpms: True
