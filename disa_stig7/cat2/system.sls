@@ -488,8 +488,8 @@ CAT2 RHEL-07-041003 pam_pkcs11 must impliment ocsp:
   file.replace:
   - name: /etc/pam_pkcs11/pam_pkcs11.conf
   - pattern: |
-      ^\s+?cert_policy\s*=.+$
-  - repl: "cert_policy = ca, ocsp_on, signature;\n"
+      ^(\s*)cert_policy\s*=.+$
+  - repl: '\1cert_policy = ca, ocsp_on, signature;\n'
   - append_if_not_found: false
 
 # RHEL-07-010119
