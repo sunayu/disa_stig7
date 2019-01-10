@@ -114,11 +114,20 @@ audisp-remote file create:
 # CAT2
 # RHEL-07-030200
 CAT2 RHEL-07-030200 audisp-remote daemon active:
-  file.replace:
+  file.blockreplace:
   - name: /etc/audisp/plugins.d/au-remote.conf
-  - pattern: ^active\s*=\s*yes.+$
-  - repl: "active = yes\n"
+  - marker_start: "# START managed with Salt -DO-NOT-EDIT- #"
+  - marker_end: "# END managed zone #"
+  - content: |
+      active = yes
+      direction = out
+      path = /sbin/audisp-remote
+      type = always
   - append_if_not_found: True
+  - show_changes: True
+#  - pattern: ^active\s*=\s*yes.+$
+#  - repl: "active = yes\n"
+#  - append_if_not_found: True
   - watch_in:
     - cmd: auditd service restart
 
