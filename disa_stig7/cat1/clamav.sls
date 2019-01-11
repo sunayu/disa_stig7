@@ -23,9 +23,11 @@ epel pkg:
 clamav pkg:
   pkg.installed:
   - pkgs:
+    - clamav-data
     - clamav
     - clamav-update
     - clamav-scanner-systemd
+    - clamav-server-systemd
 
 # Salt needs some python deps for selinux
 python deps:
@@ -44,6 +46,45 @@ clamav setsebool antivirus_use_jit:
   - name: antivirus_use_jit
   - value: 1
   - persist: true
+
+# Setup clamav
+clamd config file:
+  file.managed:
+  - name: /etc/clamd.d/scan.conf
+  - contents:
+    - 'LogFile /var/log/clamd.scan'
+    - 'LogFileMaxSize 2M'
+    - 'LogSyslog yes'
+    - 'LogRotate yes'
+    - 'LogTime yes'
+    - 'LocalSocket /var/run/clamd.scan/clamd.sock'
+    - 'User clamscan'
+    - 'AllowSupplementaryGroups yes'
+
+clamd service file:
+  file.copy:
+  - name: /usr/lib/systemd/system/clamd.service
+  - source: /usr/lib/systemd/system/clamd@.service
+
+clamd service fix:
+  file.replace:
+  - name: /usr/lib/systemd/system/clamd.service
+  - pattern: '%i'
+  - repl: 'scan'
+
+clamav scan log:
+  file.managed:
+  - name: /var/log/clamd.scan
+  - user: clamscan
+  - group: clamscan
+  - replace: False
+
+# CAT2
+# RHEL-07-030820
+clamd service:
+  service.running:
+  - name: clamd
+  - enable: true
 
 # Setup freshclam (clamav updates)
 clamav freshclam conf uncomment example:
@@ -95,43 +136,4 @@ clamav freshclam service file:
 clamav freshclam service:
   service.running:
   - name: clam-freshclam
-  - enable: true
-
-# Setup clamav
-clamd config file:
-  file.managed:
-  - name: /etc/clamd.d/scan.conf
-  - contents:
-    - 'LogFile /var/log/clamd.scan'
-    - 'LogFileMaxSize 2M'
-    - 'LogSyslog yes'
-    - 'LogRotate yes'
-    - 'LogTime yes'
-    - 'LocalSocket /var/run/clamd.scan/clamd.sock'
-    - 'User clamscan'
-    - 'AllowSupplementaryGroups yes'
-
-clamd service file:
-  file.copy:
-  - name: /usr/lib/systemd/system/clamd.service
-  - source: /usr/lib/systemd/system/clamd@.service
-
-clamd service fix:
-  file.replace:
-  - name: /usr/lib/systemd/system/clamd.service
-  - pattern: '%i'
-  - repl: 'scan'
-
-clamav scan log:
-  file.managed:
-  - name: /var/log/clamd.scan
-  - user: clamscan
-  - group: clamscan
-  - replace: False
-
-# CAT2
-# RHEL-07-030820
-clamd service:
-  service.running:
-  - name: clamd
   - enable: true
