@@ -304,7 +304,7 @@ CAT2 RHEL-07-020101 modprobe disable dccp:
   - contents: install dccp /bin/true
 
 # CAT2
-# RHEL-07-030101
+# RHEL-07-020101
 blacklist-dccp file create:
   file.managed:
   - name: /etc/modprobe.d/blacklist.conf
@@ -314,8 +314,8 @@ blacklist-dccp file create:
   - replace: false
 
 # CAT2
-# RHEL-07-030101
-CAT2 RHEL-07-030101 blacklist dccp:
+# RHEL-07-020101
+CAT2 RHEL-07-020101 blacklist dccp:
   file.replace:
   - name: /etc/modprobe.d/blacklist.conf
   - pattern: |
