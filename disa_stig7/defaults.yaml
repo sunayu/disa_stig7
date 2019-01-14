@@ -12,6 +12,8 @@
 #   See the License for the specific language governing permissions and
 
 disa_stig7:
+  # This will reset rpm owner/group/mode if they differ from the original rpm installs
+  reset_rpms: false
   # Sets grub root password. Default is 'reallyawesomepass' using command: grub-mkpasswd-pbkdf2
   grub_root_password: "grub.pbkdf2.sha512.10000.6E722187496204BCB2DC6422EF283C83BFEEF0B0F65234BD5FFE40D849552E402D7FCF2A62F2D1A6CCA92754D87552903FAE576C5D53DBD4FCB21982111C93C9.234C6E7B48E1433D8F36B27DDD91FEBB9B48027C3895818FF8258252D95B7ADAB9A55766C624ADC4ADF66569B631E8BBF783D8B2CEA4E25A46F611F7D7D8E76E"
   login_message_banner: |
@@ -28,4 +30,3 @@ disa_stig7:
     allowed_services:
     - ssh
   audit_fail_flag: 1
-  reset_rpms: True
