@@ -16,7 +16,7 @@
 
 #CAT1
 #RHEL-07-010010
-{% if disa_stig7.reset_rpms  == 'yes' %}
+{% if disa_stig7.reset_rpms %}
 CAT1 RHEL-07-010010 address rpm default mode,user,group permissions:
  disa_stig7.enforce_rpm_attributes: []
 {% endif %}
