@@ -221,6 +221,16 @@ CAT2 RHEL-07-010420 login.defs FAIL_DELAY:
   - append_if_not_found: true
 
 # CAT2
+# RHEL-07-010481
+CAT2 RHEL-07-010481 single_user_mode authentication:
+  file.replace:
+  - name: /usr/lib/systemd/system/rescue.service
+  - pattern: |
+      ^ExecStart=-\/bin\/sh\s*-c\s*\"/usr/bin/systemctl\s*--fail.+$
+  - repl: "ExecStart=-/bin/sh -c \"/usr/sbin/sulogin; /usr/bin/systemctl --fail --no-block default\n"
+  - append_if_not_found: false
+
+# CAT2
 # RHEL-07-020230
 CAT2 RHEL-07-020230 login.defs UMASK:
   file.replace:
@@ -292,6 +302,27 @@ CAT2 RHEL-07-020101 modprobe disable dccp:
   file.managed:
   - name: /etc/modprobe.d/disable-dccp.conf
   - contents: install dccp /bin/true
+
+# CAT2
+# RHEL-07-020101
+blacklist-dccp file create:
+  file.managed:
+  - name: /etc/modprobe.d/blacklist.conf
+  - user: root
+  - group: root
+  - mode: 0600
+  - replace: false
+
+# CAT2
+# RHEL-07-020101
+CAT2 RHEL-07-020101 blacklist dccp:
+  file.replace:
+  - name: /etc/modprobe.d/blacklist.conf
+  - pattern: |
+      ^blacklist\s*dccp.+$
+  - repl: 'blacklist dccp\n'
+  - not_found_content: 'blacklist dccp'
+  - append_if_not_found: True
 
 # CAT2
 # RHEL-07-020161
@@ -377,9 +408,9 @@ CAT2 pam.d password-auth:
 
 # CAT2
 # RHEL-07-040820
-CAT2 RHEL-07-040820 libswanpkg remove:
-  pkg.purged:
-  - name: libreswan
+#CAT2 RHEL-07-040820 libswanpkg remove:
+#  pkg.purged:
+#  - name: libreswan
 
 {% set postfix_version = salt['pkg.version']('postfix') %}
 {% if postfix_version %}
@@ -411,6 +442,27 @@ CAT2 RHEL-07-040720 tftp-server server_args:
   - pattern: |
       ^server_args\s*=.+$
   - repl: "server_args = -s /var/lib/tftpboot\n"
+{% endif %}
+
+{% set libreswan_version = salt['pkg.version']('libreswan-server') %}
+{% if libreswan_version %}
+# CAT2
+# RHEL-07-040820
+CAT2 RHEL-07-040720 libreswan ipsec:
+  file.comment:
+  - name: /etc/ipsec.conf
+  - pattern: |
+      ^conn.+$
+  - repl: "#conn"
+
+# CAT2
+# RHEL-07-040820
+CAT2 RHEL-07-040820 :
+  file.comment:
+  - name: /etc/ipsec.d/*.conf
+  - pattern: |
+      ^conn.+$
+  - repl: "#conn"
 {% endif %}
 
 # RHEL-07-041001
@@ -454,8 +506,8 @@ CAT2 RHEL-07-041003 pam_pkcs11 must impliment ocsp:
   file.replace:
   - name: /etc/pam_pkcs11/pam_pkcs11.conf
   - pattern: |
-      ^\s+?cert_policy\s*=\s*=.+$
-  - repl: "cert_policy = ca, ocsp_on, signature;\n"
+      ^(\s*)cert_policy\s*=.+$
+  - repl: '\1cert_policy = ca, ocsp_on, signature;\n'
   - append_if_not_found: false
 
 # RHEL-07-010119
