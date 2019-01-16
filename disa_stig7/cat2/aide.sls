@@ -42,6 +42,13 @@ aide config settings DATAONLY:
       ^DATAONLY\s*=.+$
   - repl: "DATAONLY =  p+n+u+g+s+acl+selinux+xattrs+sha512\n"
 
+aide config settings NORMAL:
+  file.replace:
+  - name: /etc/aide.conf
+  - pattern: |
+      ^NORMAL\s*=.+$
+  - repl: "NORMAL = FIPSR+sha512\n"
+
 # CAT2
 # RHEL-07-020130
 # RHEL-07-020140
