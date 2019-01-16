@@ -2,8 +2,8 @@ This formula is created to enfofce the rhel/centos disa 7 stigs
 
 Has been tested on
 
-* RHEL 7.4
-* CentOS 7.4
+* RHEL 7.6
+* CentOS 7.6
 
 Required:
 
