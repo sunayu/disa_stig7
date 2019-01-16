@@ -97,6 +97,15 @@ CAT2 RHEL-07-010402 sssd.conf ssh ssh_known_hosts_timeout:
 
 # CAT2
 # RHEL-07-040180
+sssd append ldap section:
+  file.replace:
+  - name: /etc/sssd/sssd.conf
+  - pattern: |
+      ^\[ldap\].*$
+  - repl: '[ldap]\n'
+  - not_found_content: '[ldap]'
+  - append_if_not_found: true
+
 CAT2 RHEL-07-040180 sssd.conf ldap ldap_id_use_start_tls:
   augeas.change:
   - context: /files/etc/sssd/sssd.conf
