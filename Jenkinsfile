@@ -2,19 +2,19 @@ pipeline {
     agent any
 
     stages {
+        stage('Clean') {
+            steps {
+                echo 'Cleaning test environment..'
+            }
+        }
         stage('Build') {
             steps {
-                echo 'Building..'
+                echo 'Building test environment..'
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+                echo 'Testing salt states..'
             }
         }
     }
