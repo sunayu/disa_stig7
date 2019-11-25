@@ -11,7 +11,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-
+{% from "disa_stig7/map.jinja" import disa_stig7 with context %}
 include:
   - .cat1.auditd
   - .cat1.clamav
@@ -20,7 +20,9 @@ include:
   - .cat1.system
   - .cat2.aide
   - .cat2.auditd
+{% if disa_stig7.enable_iptables %}
   - .cat2.iptables
+{% endif %}
   - .cat2.ntp
   - .cat2.rsyslog
   - .cat2.sshd

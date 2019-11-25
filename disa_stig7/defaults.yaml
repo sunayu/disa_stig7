@@ -12,6 +12,8 @@
 #   See the License for the specific language governing permissions and
 
 disa_stig7:
+  # This enables or disables iptables for development or production needs
+  enable_iptables: true
   # This will reset rpm owner/group/mode if they differ from the original rpm installs
   reset_rpms: false
   # Sets grub root password. Default is 'reallyawesomepass' using command: grub-mkpasswd-pbkdf2
