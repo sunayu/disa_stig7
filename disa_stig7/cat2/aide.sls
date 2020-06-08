@@ -60,14 +60,31 @@ CAT2 RHEL-07-020130 cron aide check:
      - '#!/bin/sh'
      - aide --check > /var/log/aide/aidecheck-`date +%Y-%m-%d`.txt| /bin/mail -s "$HOSTNAME - Daily aide integrity check run" root@localhost
 
-{% if not salt['grains.get']('stig_aide_initialized', False) %}
+{%- if not salt['grains.get']('stig_aide_initialized', False) %}
+{%-   if salt['file.file_exists']('/var/lib/aide/aide.db.gz') %}
+# Already initialized, we should backup old and update
+# Backup existing db
+aide create backup db:
+  file.copy:
+  - name: /var/lib/aide/aide-{{ None|strftime("%Y%m%d-%H%M%S") }}.db.gz
+  - source: /var/lib/aide/aide.db.gz
+
+# Update
+aide update db:
+  cmd.run:
+  - name: aide --update
+
+{%-   else %}
+# Doesnt exist yet. Initialize new db
 aide create inital db:
   cmd.run:
   - name: aide --init
   - order: last
 
+{%-   endif %}
+# Regardless we make sure generated new db is now the main db
 aide copy initial db:
-  file.managed:
+  file.copy:
   - name: /var/lib/aide/aide.db.gz
   - source: /var/lib/aide/aide.db.new.gz
   - force: true
@@ -78,4 +95,5 @@ aide init grain:
   - name: stig_aide_initialized
   - value: True
   - order: last
-{% endif %}
+
+{%- endif %}
