@@ -17,13 +17,26 @@ from subprocess import Popen, PIPE
 import os
 import sys
 
+pythonthree = True
+version_info = sys.version_info
+if version_info.major == 2:
+    pythonthree = False
+
 def _find_boot_dev():
-    output = Popen(['df','/boot'], stdout=PIPE)
+    if pythonthree:
+        output = Popen(['df','/boot'], stdout=PIPE,encoding='utf8')
+    else:
+        output = Popen(['df','/boot'], stdout=PIPE)
+
     boot_device = output.stdout.read().split('\n')[1].split()[0]
     return boot_device
 
 def _find_root_dev():
-    output_root = Popen(['df','/'], stdout=PIPE)
+    if pythonthree:
+        output_root = Popen(['df','/'], stdout=PIPE,encoding='utf8')
+    else:
+        output_root = Popen(['df','/'], stdout=PIPE)
+
     root_device = output_root.stdout.read().split('\n')[1].split()[0]
     return root_device
 
@@ -35,8 +48,11 @@ def main():
     space_left = False
 
     if os.path.isdir('/var/log/audit'):
+        if pythonthree:
+            process = Popen(['df','--block-size=1M','/var/log/audit'], stdout=PIPE,encoding='utf8')
+        else:
+            process = Popen(['df','--block-size=1M','/var/log/audit'], stdout=PIPE)
 
-        process = Popen(['df','--block-size=1M','/var/log/audit'], stdout=PIPE)
         output = process.communicate()
         exit_code = process.wait()
 
@@ -52,8 +68,9 @@ def main():
 
     grains['stig_audit_device'] = device
     grains['stig_audit_space_left'] = space_left
-    
+
     grains['stig_boot_device'] = _find_boot_dev()
     grains['stig_root_device'] = _find_root_dev()
 
     return grains
+
