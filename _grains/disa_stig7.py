@@ -18,8 +18,7 @@ import os
 import sys
 
 pythonthree = True
-version_info = sys.version_info
-if version_info.major == 2:
+if sys.version_info.major == 2:
     pythonthree = False
 
 def _find_boot_dev():
