@@ -26,8 +26,7 @@ clamav pkg:
     - clamav-data
     - clamav
     - clamav-update
-    - clamav-scanner-systemd
-    - clamav-server-systemd
+    - clamd
 
 # Salt needs some python deps for selinux
 python deps:
