@@ -15,9 +15,8 @@
 # CAT2
 
 # Required package for augeas
-CAT2 sssd augeas required pkg:
-  pkg.installed:
-  - name: python-augeas
+include:
+- disa_stig7.python_augeas
 
 sssd package:
   pkg.installed:

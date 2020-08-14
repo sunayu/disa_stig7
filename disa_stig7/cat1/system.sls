@@ -65,7 +65,7 @@ CAT1 RHEL-07-020050 gpgcheck yum:
 CAT1 RHEL-07-020060 localpkg_gpgcheck yum:
   file.replace:
   - name: /etc/yum.conf
-  - pattern: 
+  - pattern:
       ^\s*localpkg_gpgcheck\s*=.+\n
   - repl: "localpkg_gpgcheck=1\n"
   - not_found_content: "localpkg_gpgcheck=1"
@@ -141,9 +141,8 @@ snmpd service restart:
 
 {% set gdm_version = salt['pkg.version']('gdm') %}
 {% if gdm_version %}
-install python-augeas pkg:
-  pkg.installed:
-  - name: python-augeas
+include:
+- disa_stig7.python_augeas
 
 # CAT1
 # RHEL-07-010440
