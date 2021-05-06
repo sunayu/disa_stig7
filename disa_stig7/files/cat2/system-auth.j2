@@ -14,7 +14,8 @@ account     sufficient    pam_localuser.so
 account     sufficient    pam_succeed_if.so uid < 1000 quiet
 account     required      pam_permit.so
 
-password    requisite     pam_pwquality.so try_first_pass local_users_only retry=3
+password    requisite     pam_pwhistory.so use_authtok remember=5 retry=3
+password    required      pam_pwquality.so retry=3 try_first_pass local_users_only authtok_type=
 password    sufficient    pam_unix.so sha512 shadow try_first_pass use_authtok remember={{ password_remember }}
 password    required      pam_deny.so
 password    substack      system-auth

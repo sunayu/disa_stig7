@@ -130,7 +130,7 @@ CAT2 RHEL-07-030200 audisp-remote daemon active:
 
 # CAT2
 # RHEL-07-030350
-{% set audit_space_left = salt['grains.get']('stig_audit_space_left','75') %}
+{% set audit_space_left = salt['grains.get']('stig_audit_space_left','25') %}
 CAT2 RHEL-07-030350 auditd.conf space_left:
   file.replace:
   - name: /etc/audit/auditd.conf
