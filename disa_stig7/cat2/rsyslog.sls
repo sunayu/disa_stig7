@@ -21,7 +21,7 @@ CAT2 RHEL-07-021160 log cron rsyslog:
   - name: /etc/rsyslog.conf
   - pattern: |
       ^cron\.\*.+$
-  - repl: "cron.*                                                  /var/log/cron\n"
+  - repl: "cron.*                                                  /var/log/cron.log\n"
   - watch_in:
     - service: rsyslog service restart
 
